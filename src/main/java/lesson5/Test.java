@@ -17,7 +17,6 @@ public class Test {
         float finalAmount2 = bank.getFinalAmountByWhile();
 
         System.out.printf("После %d месяцев сумма вклада составит %f%n", months, finalAmount);
-
         System.out.printf("После %d месяцев сумма вклада составит %f%n", months, finalAmount2);
     }
 }
