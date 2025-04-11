@@ -1,8 +1,9 @@
 package lesson6;
 
 public class Arrays {
+    static String[] array = {"привет", "ПОКА", "гипербола"};
     public static void main(String[] args) {
-        String[] array = {"привет", "ПОКА", "гипербола"};
+
         System.out.println(array[0].toUpperCase());
         System.out.println(array[1].toLowerCase());
 
@@ -15,5 +16,16 @@ public class Arrays {
                 System.out.println(newStr);
             }
         }
+
+        generateString();
+    }
+
+    public static void generateString(){
+        System.out.println("\nРандомная строка:");
+        System.out.println(array[randomNum()]);
+    }
+
+    public static int randomNum(){
+        return (int) (Math.random()*3);
     }
 }
