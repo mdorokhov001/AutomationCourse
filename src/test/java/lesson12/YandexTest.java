@@ -21,7 +21,8 @@ public class YandexTest {
     @Test
     @DisplayName("Выполнение поиска в яндекс и проверка лого")
     void logoCheck() {
-        getPage().getSearchField().shouldBe(Condition.visible).setValue(SEARCH_STRING).pressEnter();
+        getPage().setSearchField(SEARCH_STRING);
+        getPage().getSearchButton().buttonClick();
         getPage().getLogo().shouldBe(Condition.visible);
         getPage().getLogoColour().shouldHave(attribute("fill", "#F8604A"));
     }
