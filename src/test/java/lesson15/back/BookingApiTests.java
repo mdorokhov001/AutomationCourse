@@ -9,10 +9,10 @@ import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.notNullValue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class BookingApiBase {
+public class BookingApiTests {
 
     private static String baseUrl = "https://restful-booker.herokuapp.com";
-    private int bookingId = 2;
+    private static int bookingId = 0;
 
     @BeforeAll
     public static void setup() {
@@ -21,6 +21,7 @@ public class BookingApiBase {
 
     public String createToken() {
         String authPayload = "{ \"username\": \"admin\", \"password\": \"password123\" }";
+
         Response response = given()
                 .contentType("application/json")
                 .body(authPayload)
@@ -61,6 +62,7 @@ public class BookingApiBase {
                 .extract().response();
 
         bookingId = response.path("bookingid");
+        System.out.println("bookingId после создания: " + bookingId);
     }
 
     @Test
@@ -101,6 +103,7 @@ public class BookingApiBase {
     @DisplayName("GET - Получение конкретного бронирования по ID")
     public void testGetBookingById() {
 
+        System.out.println("bookingId перед получением: " + bookingId);
         given()
                 .when()
                 .get("/booking/{id}", bookingId)
@@ -126,6 +129,7 @@ public class BookingApiBase {
     @Order(6)
     public void testGetBookingResponseFormat() {
 
+        System.out.println("bookingId перед получением полного ответа: " + bookingId);
         given()
                 .when()
                 .get("/booking/{id}", bookingId)
@@ -173,7 +177,7 @@ public class BookingApiBase {
     @Order(8)
     public void testDeleteExistingBooking() {
         String token = createToken();
-
+        System.out.println("bookingId перед удалением: " + bookingId);
         given()
                 .header("Cookie", "token=" + token)
                 .when().delete("/booking/{id}", bookingId)
@@ -181,15 +185,14 @@ public class BookingApiBase {
     }
 
     @Test
-    @DisplayName("DELETE - Удаление несуществующего бронирования")
+    @DisplayName("DELETE - Удаление несуществующего бронирования. Проверка что предыдущая запись была удалена")
     @Order(9)
     public void testDeleteNonExistingBooking() {
         String token = createToken();
-        int nonExistingId = 9999999;
 
         given()
                 .header("Cookie", "token=" + token)
-                .when().delete("/booking/{id}", nonExistingId)
+                .when().delete("/booking/{id}", bookingId)
                 .then().statusCode(405);
     }
 
