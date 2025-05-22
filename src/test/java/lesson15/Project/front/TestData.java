@@ -1,4 +1,4 @@
-package lesson15.front;
+package lesson15.Project.front;
 
 import java.io.FileInputStream;
 import java.io.IOException;

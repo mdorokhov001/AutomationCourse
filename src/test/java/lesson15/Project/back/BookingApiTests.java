@@ -1,4 +1,4 @@
-package lesson15.back;
+package lesson15.Project.back;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
